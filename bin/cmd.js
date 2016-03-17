@@ -50,7 +50,9 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
       console.log(stderr.toString());
     });
 
-    if (fs.exists(iconFile)) {
+    var stat = fs.statSync(iconFile);
+    if (stat.isFile) {
+      console.log("Copying icon file " + iconFile);
       ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
         fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
       });
@@ -69,12 +71,14 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
     });
 
     gradlew.on('close', function () {
-      fs.copySync(
-        path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk'),
-        apkOutputFile
-      );
+      if (fs.statSync(path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk')).isFile) {
+        fs.copySync(
+          path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk'),
+          apkOutputFile
+        );
 
-      console.log('Copied built apk to', apkOutputFile);
+        console.log('Copied built apk to', apkOutputFile);
+      }
     });
   });
 });
