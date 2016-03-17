@@ -51,19 +51,19 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
     });
 
     var stat = fs.statSync(iconFile);
-    if (stat.isFile) {
+    if (stat.isFile()) {
       console.log("Copying icon file " + iconFile);
       ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
         fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
       });
     }
 
-    var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['build'], {cwd: tempPath, env: env, stdio: 'inherit'});
+    var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['-q', 'build'], {cwd: tempPath, env: env, stdio: 'inherit'});
 
     console.log('Compiling apk...');
 
     gradlew.on('close', function () {
-      if (fs.statSync(path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk')).isFile) {
+      if (fs.statSync(path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk')).isFile()) {
         fs.copySync(
           path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk'),
           apkOutputFile
