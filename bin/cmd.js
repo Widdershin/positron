@@ -50,9 +50,11 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
       console.log(stderr.toString());
     });
 
-    ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
-      fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
-    });
+    if (fs.exists(iconFile)) {
+      ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
+        fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
+      });
+    }
 
     var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['-q', 'build'], {cwd: tempPath, env: env});
 
