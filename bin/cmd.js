@@ -11,7 +11,7 @@ var childProcess = require('child_process');
 var currentWorkingDirectory = process.cwd();
 var filesToCopy = argv._;
 var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
-var newPackageName = argv.p || 'positron-' + uuid.v4();
+var newPackageName = argv.p || 'positron.random_' + Math.floor(Math.random()*100000)
 var newTitle = argv.t || path.basename(currentWorkingDirectory)
 
 var positronRoot = path.join(__dirname, '..');
