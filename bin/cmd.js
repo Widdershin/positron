@@ -65,9 +65,9 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
 
     try {
       fs.accessSync(iconFile);
-      console.log("Copying icon file " + iconFile);
+      console.log("Converting icon file " + iconFile);
       ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
-        fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
+        childProcess.spawnSync('convert', [iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png')]);
       });
     } catch (err) {
     }
