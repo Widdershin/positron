@@ -12,7 +12,8 @@ var currentWorkingDirectory = process.cwd();
 var filesToCopy = argv._;
 var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
 var newPackageName = argv.p || 'positron.random_' + Math.floor(Math.random()*100000)
-var newTitle = argv.t || path.basename(currentWorkingDirectory)
+var newTitle = argv.t || path.basename(currentWorkingDirectory);
+var icon = argv.i || 'favicon.ico';
 
 var positronRoot = path.join(__dirname, '..');
 
@@ -47,6 +48,10 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
       if (err) throw err;
       console.log(stdout.toString());
       console.log(stderr.toString());
+    });
+
+    ['hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi'].forEach(function(type) {
+      fs.copySync(iconFile, path.join(tempPath, 'app', 'src', 'main', 'res', 'mipmap-' + type, 'ic_launcher.png'));
     });
 
     var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['-q', 'build'], {cwd: tempPath, env: env});
