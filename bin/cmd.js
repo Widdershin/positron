@@ -18,6 +18,19 @@ var positronRoot = path.join(__dirname, '..');
 
 var androidHome = process.env.ANDROID_HOME;
 
+if (argv.h || argv.help) {
+  console.log('' +
+    'usage:\n' +
+    '    positron [options] <filesToCompile>...\n\n' +
+    'options:\n' +
+    '    [-p <packageName>]   The name of the package. E.g: -p "com.example.app"\n' +
+    '    [-t <appName>]       The name of the App. E.g: -p "ExampleApp"\n' +
+    '    [-o <apkOutputPath>] The path to output the APK. By default, ./app.apk'
+  );
+
+  process.exit(0);
+}
+
 if (!androidHome) {
   if (process.platform === 'darwin') {
     androidHome = path.join(process.env.HOME, 'Library', 'Android', 'sdk');
