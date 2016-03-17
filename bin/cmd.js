@@ -13,6 +13,18 @@ var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
 
 var positronRoot = path.join(__dirname, '..');
 
+var androidHome = process.env.ANDROID_HOME;
+
+if (!androidHome) {
+  if (process.platform === 'darwin') {
+    androidHome = path.join(process.env.HOME, 'Library', 'Android', 'sdk');
+  }
+
+  if (!androidHome) {
+    throw new Error('Please set ANDROID_HOME env var to the location of Android Studio');
+  }
+}
+
 tmp.dir({keep: true}, function (err, tempPath, cleanup) {
   if (err) throw err;
 
@@ -26,7 +38,9 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
       );
     });
 
-    var gradlew = spawn(path.join(tempPath, 'gradlew'), ['build'], {cwd: tempPath});
+    var env = Object.assign({}, process.env, {ANDROID_HOME: androidHome});
+
+    var gradlew = spawn(path.join(tempPath, 'gradlew'), ['build'], {cwd: tempPath, env: env});
 
     console.log('Compiling apk...');
 
