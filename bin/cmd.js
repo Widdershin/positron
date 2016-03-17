@@ -25,7 +25,7 @@ if (argv.h || argv.help) {
     '    positron [options] <filesToCompile>...\n\n' +
     'options:\n' +
     '    [-p <packageName>]   The name of the package. E.g: -p "com.example.app"\n' +
-    '    [-t <appName>]       The name of the App. E.g: -p "ExampleApp"\n' +
+    '    [-t <appName>]       The name of the app. E.g: -p "ExampleApp"\n' +
     '    [-o <apkOutputPath>] The path to output the APK. By default, ./app.apk'
   );
 
