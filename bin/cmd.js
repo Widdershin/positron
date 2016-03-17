@@ -13,7 +13,7 @@ var filesToCopy = argv._;
 var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
 var newPackageName = argv.p || 'positron.random_' + Math.floor(Math.random()*100000)
 var newTitle = argv.t || path.basename(currentWorkingDirectory);
-var icon = argv.i || 'favicon.ico';
+var iconFile = argv.i || 'favicon.ico';
 
 var positronRoot = path.join(__dirname, '..');
 
