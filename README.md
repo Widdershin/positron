@@ -1,17 +1,23 @@
 # positron
 Compile your javascript apps to android
 
-Usage:
+Installation
+---
+
+First, make sure you have installed [Android Studio](https://developer.android.com/sdk/index.html#top) and you can run it.
+
+Now, install `positron`.
 
 ```bash
-$ positron
-$ adb install app.apk
+$ npm install positron-cli -g
 ```
 
-Given a directory containing an index.html and static resources
-Make a copy of the boilerplate
-Copy the contents of the given directory into our boilerplate copy's assets dir
-Configured the copied boilerplate (name/com)
-build it!
+Usage
+---
+
+```bash
+$ positron index.html bundle.js
+$ adb install app.apk
+```
 
 
