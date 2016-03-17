@@ -43,7 +43,6 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
 
     var env = Object.assign({}, process.env, {ANDROID_HOME: androidHome});
 
-    console.log(tempPath);
     var changeName = childProcess.execFile(path.join(positronRoot, "bin", "change-name.sh"), [newPackageName, newTitle, tempPath], function(err, stdout, stderr) {
       if (err) throw err;
       console.log(stdout.toString());
