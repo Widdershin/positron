@@ -13,9 +13,16 @@ ORIGINAL_PACKAGE_REGEX="${ORIGINAL_PACKAGE//\./\\.}"
 
 cd "${DIRECTORY}"
 for FILE in app/{build.gradle,src/main/{AndroidManifest.xml,/java/${ORIGINAL_PACKAGE_PATH}/MainActivity.java,res/layout/activity_main.xml}}; do
-  sed -i -e "/${ORIGINAL_PACKAGE_REGEX}/s/${ORIGINAL_PACKAGE_REGEX}/${NEW_PACKAGE//\//\\/}/" ${FILE}
+  TMPFILE=$(mktemp)
+  cp ${FILE} ${TMPFILE}
+  cat ${TMPFILE} | sed -e "/${ORIGINAL_PACKAGE_REGEX}/s/${ORIGINAL_PACKAGE_REGEX}/${NEW_PACKAGE//\//\\/}/" > ${FILE}
+  rm ${TMPFILE}
 done
-sed -i -e "/${ORIGINAL_TITLE}/s/${ORIGINAL_TITLE}/${NEW_TITLE//\//\\/}/" app/src/main/res/values/strings.xml
+FILE="app/src/main/res/values/strings.xml"
+TMPFILE=$(mktemp)
+cp ${FILE} ${TMPFILE}
+cat ${TMPFILE} | sed -e "/${ORIGINAL_TITLE}/s/${ORIGINAL_TITLE}/${NEW_TITLE//\//\\/}/" > ${FILE}
+rm ${TMPFILE}
 mkdir -p $(dirname app/src/main/java/${NEW_PACKAGE_PATH})
 mv app/src/main/java/{${ORIGINAL_PACKAGE_PATH},${NEW_PACKAGE_PATH}}
 cd - >/dev/null
