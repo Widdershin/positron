@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Compile Javascript apps for Android",
   "main": "bin/cmd.js",
+  "files": ["bin", "boilerplate"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -30,6 +30,14 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
 
     console.log('Compiling apk...');
 
+    gradlew.stdout.on('data', function (data) {
+      console.log(data.toString());
+    });
+
+    gradlew.stderr.on('data', function (data) {
+      console.log(data.toString());
+    });
+
     gradlew.on('close', function () {
       fs.copySync(
         path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk'),
