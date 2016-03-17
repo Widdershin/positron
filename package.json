@@ -30,6 +30,7 @@
   },
   "homepage": "https://github.com/Widdershin/positron",
   "dependencies": {
+    "docopt": "^0.6.2",
     "fs-extra": "^0.26.7",
     "minimist": "^1.2.0",
     "ncp": "^2.0.0",

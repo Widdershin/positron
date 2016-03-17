@@ -7,6 +7,7 @@ var tmp = require('tmp');
 var ncp = require('ncp');
 var uuid = require('node-uuid');
 var childProcess = require('child_process');
+var docopt = require('docopt')
 
 var currentWorkingDirectory = process.cwd();
 var filesToCopy = argv._;
@@ -18,6 +19,20 @@ var iconFile = argv.i || 'favicon.ico';
 var positronRoot = path.join(__dirname, '..');
 
 var androidHome = process.env.ANDROID_HOME;
+
+doc = '' +
+'Usage:\n' +
+'  positron [options] <path>...\n' +
+'\n' +
+'Path is a series of pathnames to files to include in the html rendering.\n' +
+'\n' +
+'Options:\n' +
+'  -h --help    Show this help screen\n' +
+'  -p <package> The name of the package. E.g: -p "comm.example.app"\n' +
+'  -t <title>   The name of the app. E.g: -p "ExampleApp". By default, the current directory name\n' +
+'  -o <path>    The path to output the APK. [default: ./app.apk]'
+var opts = docopt.docopt(doc)
+console.log(opts);
 
 if (argv.h || argv.help) {
   console.log('' +
