@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Compile Javascript apps for Android",
   "main": "bin/cmd.js",
-  "files": ["bin", "boilerplate"],
+  "files": [
+    "bin",
+    "boilerplate"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +33,7 @@
     "fs-extra": "^0.26.7",
     "minimist": "^1.2.0",
     "ncp": "^2.0.0",
+    "node-uuid": "^1.4.7",
     "tmp": "0.0.28"
   }
 }

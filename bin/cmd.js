@@ -5,11 +5,14 @@ var argv = require('minimist')(process.argv.slice(2));
 var path = require('path');
 var tmp = require('tmp');
 var ncp = require('ncp');
-var spawn = require('child_process').spawn;
+var uuid = require('node-uuid');
+var childProcess = require('child_process');
 
 var currentWorkingDirectory = process.cwd();
 var filesToCopy = argv._;
 var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
+var newPackageName = argv.p || 'positron-' + uuid.v4();
+var newTitle = argv.t || path.basename(currentWorkingDirectory)
 
 var positronRoot = path.join(__dirname, '..');
 
@@ -40,7 +43,14 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
 
     var env = Object.assign({}, process.env, {ANDROID_HOME: androidHome});
 
-    var gradlew = spawn(path.join(tempPath, 'gradlew'), ['build'], {cwd: tempPath, env: env});
+    console.log(tempPath);
+    var changeName = childProcess.execFile(path.join(positronRoot, "bin", "change-name.sh"), [newPackageName, newTitle, tempPath], function(err, stdout, stderr) {
+      if (err) throw err;
+      console.log(stdout.toString());
+      console.log(stderr.toString());
+    });
+
+    var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['-q', 'build'], {cwd: tempPath, env: env});
 
     console.log('Compiling apk...');
 
@@ -49,7 +59,7 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
     });
 
     gradlew.stderr.on('data', function (data) {
-      console.log(data.toString());
+      console.error(data.toString());
     });
 
     gradlew.on('close', function () {
