@@ -24,7 +24,7 @@ if (!androidHome) {
   }
 
   if (!androidHome) {
-    throw new Error('Please set ANDROID_HOME env var to the location of Android Studio');
+    throw new Error('Please set ANDROID_HOME env var to the location of Android SDK');
   }
 }
 
