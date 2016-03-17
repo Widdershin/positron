@@ -1,5 +1,7 @@
 # positron
-Compile your javascript apps to android
+Compile your Javascript apps to Android
+
+`positron` takes your static web apps and compiles them into a standalone Android app, ready to run on a phone.
 
 Installation
 ---
