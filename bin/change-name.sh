@@ -13,13 +13,13 @@ ORIGINAL_PACKAGE_REGEX="${ORIGINAL_PACKAGE//\./\\.}"
 
 cd "${DIRECTORY}"
 for FILE in app/{build.gradle,src/main/{AndroidManifest.xml,/java/${ORIGINAL_PACKAGE_PATH}/MainActivity.java,res/layout/activity_main.xml}}; do
-  TMPFILE=$(mktemp)
+  TMPFILE=$(mktemp tmp.XXXXXXXXXX)
   cp ${FILE} ${TMPFILE}
   cat ${TMPFILE} | sed -e "/${ORIGINAL_PACKAGE_REGEX}/s/${ORIGINAL_PACKAGE_REGEX}/${NEW_PACKAGE//\//\\/}/" > ${FILE}
   rm ${TMPFILE}
 done
 FILE="app/src/main/res/values/strings.xml"
-TMPFILE=$(mktemp)
+TMPFILE=$(mktemp tmp.XXXXXXXXXX)
 cp ${FILE} ${TMPFILE}
 cat ${TMPFILE} | sed -e "/${ORIGINAL_TITLE}/s/${ORIGINAL_TITLE}/${NEW_TITLE//\//\\/}/" > ${FILE}
 rm ${TMPFILE}
