@@ -58,17 +58,9 @@ tmp.dir({keep: true}, function (err, tempPath, cleanup) {
       });
     }
 
-    var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['-q', 'build'], {cwd: tempPath, env: env});
+    var gradlew = childProcess.spawn(path.join(tempPath, 'gradlew'), ['build'], {cwd: tempPath, env: env, stdio: 'inherit'});
 
     console.log('Compiling apk...');
-
-    gradlew.stdout.on('data', function (data) {
-      console.log(data.toString());
-    });
-
-    gradlew.stderr.on('data', function (data) {
-      console.error(data.toString());
-    });
 
     gradlew.on('close', function () {
       if (fs.statSync(path.join(tempPath, 'app', 'build', 'outputs', 'apk', 'app-debug.apk')).isFile) {
