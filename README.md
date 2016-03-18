@@ -40,14 +40,16 @@ $ adb install app.apk
 For more info, run `positron --help`
 ```bash
 $ positron --help
-usage:
-    positron [options] <filesToCompile>...
+Usage:
+  positron [options] <path>...
 
-options:
-    [-p <packageName>]   The name of the package. E.g: -p "com.example.app"
-    [-t <appName>]       The name of the app. E.g: -p "ExampleApp"
-    [-o <apkOutputPath>] The path to output the APK. By default, ./app.apk
+Path is a series of pathnames to files to include in the html rendering.
 
+Options:
+  -h --help    Show this help screen
+  -p <package> The name of the package. E.g: -p "comm.example.app"
+  -t <title>   The name of the app. E.g: -p "ExampleApp". By default, the current directory name
+  -o <path>    The path to output the APK. [default: ./app.apk]
 ```
 
 How does it work?

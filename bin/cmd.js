@@ -1,25 +1,4 @@
 #! /usr/bin/env node
-var process = require('process');
-var fs = require('fs-extra');
-var argv = require('minimist')(process.argv.slice(2));
-var path = require('path');
-var tmp = require('tmp');
-var ncp = require('ncp');
-var uuid = require('node-uuid');
-var childProcess = require('child_process');
-var docopt = require('docopt')
-
-var currentWorkingDirectory = process.cwd();
-var filesToCopy = argv._;
-var apkOutputFile = argv.o || path.join(currentWorkingDirectory, 'app.apk');
-var newPackageName = argv.p || 'positron.random_' + Math.floor(Math.random()*100000)
-var newTitle = argv.t || path.basename(currentWorkingDirectory);
-var iconFile = argv.i || 'favicon.ico';
-
-var positronRoot = path.join(__dirname, '..');
-
-var androidHome = process.env.ANDROID_HOME;
-
 doc = '' +
 'Usage:\n' +
 '  positron [options] <path>...\n' +
@@ -31,21 +10,28 @@ doc = '' +
 '  -p <package> The name of the package. E.g: -p "comm.example.app"\n' +
 '  -t <title>   The name of the app. E.g: -p "ExampleApp". By default, the current directory name\n' +
 '  -o <path>    The path to output the APK. [default: ./app.apk]'
+var docopt = require('docopt')
 var opts = docopt.docopt(doc)
-console.log(opts);
 
-if (argv.h || argv.help) {
-  console.log('' +
-    'usage:\n' +
-    '    positron [options] <filesToCompile>...\n\n' +
-    'options:\n' +
-    '    [-p <packageName>]   The name of the package. E.g: -p "com.example.app"\n' +
-    '    [-t <appName>]       The name of the app. E.g: -p "ExampleApp"\n' +
-    '    [-o <apkOutputPath>] The path to output the APK. By default, ./app.apk'
-  );
+var process = require('process');
+var fs = require('fs-extra');
+var argv = require('minimist')(process.argv.slice(2));
+var path = require('path');
+var tmp = require('tmp');
+var ncp = require('ncp');
+var uuid = require('node-uuid');
+var childProcess = require('child_process');
 
-  process.exit(0);
-}
+var currentWorkingDirectory = process.cwd();
+var filesToCopy = opts['<path>'];
+var apkOutputFile = opts['-o'] || path.join(currentWorkingDirectory, 'app.apk');
+var newPackageName = opts['-p'] || 'positron.random_' + Math.floor(Math.random()*100000)
+var newTitle = opts['-t'] || path.basename(currentWorkingDirectory);
+var iconFile = opts['-i'] || 'favicon.ico';
+
+var positronRoot = path.join(__dirname, '..');
+
+var androidHome = process.env.ANDROID_HOME;
 
 if (!androidHome) {
   if (process.platform === 'darwin') {
