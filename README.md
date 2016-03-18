@@ -56,3 +56,11 @@ How does it work?
 ---
 
 `positron` works by taking a boilerplate Android app with just a single web view, then copying all your static assets in and compiling it. It's surprisingly simple but works well.
+
+Why the name 'positron'?
+---
+
+`positron` was inspired by [Github's Electron](http://electron.atom.io/). Electron allows you to build native desktop apps using web technologies. `positron` allows you to build native apps for phones using web technologies. And according to Wikipedia, the opposite of an Electron is a Positron.
+
+![positron](https://raw.githubusercontent.com/Widdershin/positron/master/boilerplate/app/src/main/res/mipmap-hdpi/ic_launcher.png)
+
